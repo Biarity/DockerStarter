@@ -4,7 +4,6 @@ Docker starter project for ASP.NET Core app with a JS SPA frontend served by ngi
 TODO: create a better nginx file @ nginx/default
 
 # Usage
-
 * Initially
     * install docker
     * install git
