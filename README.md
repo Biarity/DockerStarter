@@ -17,7 +17,7 @@ TODO: create a better nginx file @ nginx/default
     
 * For frontend
     * `git clone [repo containing frontend code] /app/source/frontend`
-    * Update Dockerfile to build solution into /app/source/frontend/dist correctly
+    * Update frontend/Dockerfile to build solution into /app/source/frontend/dist correctly
     * (+ to only update)
         * `cd /app/source && docker-compose build frontend && docker-compose up --no-deps -d frontend`
 
