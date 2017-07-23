@@ -2,8 +2,8 @@ FROM microsoft/dotnet:latest
 COPY . /app/backend
 WORKDIR ./app/backend
 
-RUN dotnet restore
-RUN dotnet build
+RUN apt-get -y update && apt-get -y install git
+RUN git clone REPO_CONTAINING_BACKEND_ASPNETCORE_SOURCE .
 
 EXPOSE 5000/tcp
 ENV ASPNETCORE_URLS http://*:5000

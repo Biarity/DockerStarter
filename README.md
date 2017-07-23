@@ -4,25 +4,24 @@ Docker starter project for ASP.NET Core app with a JS SPA frontend served by ngi
 TODO: create a better nginx file @ nginx/default
 
 # Usage
-* Initially
-    * install docker
-    * install git
-    * move this entire folder to host machine into /app/source
-        * `git clone https://github.com/Biarity/DockerStarter.git /app/source`
-
-* For backend
-    * `git clone [repo containing backend asp.net core code] /app/source/backend`
-    * (+ to only update)
-        * `cd /app/source && docker-compose build backend && docker-compose up --no-deps -d backend`
+* Edit the `RUN git clone ...` statements in backend/Dockerfile and frontend/Dockerfile accordingly
+    * these are the repos that will be cloned when you rebuild the images as below
     
-* For frontend
-    * `git clone [repo containing frontend code] /app/source/frontend`
-    * Update frontend/Dockerfile to build solution into /app/source/frontend/dist correctly
-    * (+ to only update)
-        * `cd /app/source && docker-compose build frontend && docker-compose up --no-deps -d frontend`
+* Go to host machine (ie. DigitalOcean machine)
+* install docker
+* move this entire folder to host machine into /app/source
+    * eg. using git `apt-get -y update && apt-get -y install git && git clone https://github.com/Biarity/DockerStarter.git /app/source`
 
 * Start compose server (ie. to update all)
     * `cd /app/source && docker-compose build && docker-compose up -d`
+
+* To only update backend
+    * `cd /app/source && docker-compose build backend && docker-compose up --no-deps -d backend`
+    
+* To only update frontend
+    * Update frontend/Dockerfile to build solution into /app/source/frontend/dist correctly
+    * `cd /app/source && docker-compose build frontend && docker-compose up --no-deps -d frontend`
+
 
 
 # Commands
