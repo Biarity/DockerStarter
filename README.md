@@ -9,7 +9,7 @@ TODO: create a better nginx file @ nginx/default
     * install docker
     * install git
     * move this entire folder to host machine into /app/source
-        `git clone 
+        * `git clone https://github.com/Biarity/DockerStarter.git /app/source`
 
 * For backend
     * `git clone [repo containing backend asp.net core code] /app/source/backend`
