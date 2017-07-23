@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  frontend: # served by nginx, also reverse-proxying backend
+    build: ./frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+  backend:
+    build: ./backend
+    restart: always
+    ports: 
+      - "5000"
+    depends_on:
+      - db
+      
+  db:
+    build: ./postgres
+    restart: always
+    volumes:
+      - /app/pg-vol/data:/var/lib/postgresql/data
+      - /app/pg-vol/config:/etc/postgresql
+      - /app/pg-vol/logs:/var/log/postgresql
+

@@ -1,0 +1,72 @@
+#server {
+#    # SSL config
+#    listen 443 ssl http2 default_server;
+#    listen [::]:443 ssl http2 default_server;
+#    include snippets/ssl-storealis.com.conf;
+#    include snippets/ssl-params.conf;
+#
+#    listen 80 default_server;
+#    listen [::]:80 default_server;
+#    #server_name storealis.com www.storealis.com;
+#    return 301 https://$server_name$request_uri;
+#
+#    root /app/frontend;
+#
+#    gzip on;
+#    gzip_disable "msie6";
+#
+#    gzip_vary on;
+#    gzip_proxied any;
+#    gzip_comp_level 6;
+#    gzip_buffers 16 8k;
+#    gzip_http_version 1.1;
+#    gzip_min_length 256;
+#    gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript application/vnd.ms-fontobject application$;
+#    location / {
+#         try_files $uri $uri/ /index.html;
+#    }
+#
+#    location /api {
+#        proxy_pass http://backend:5000;
+#        proxy_http_version 1.1;
+#        proxy_set_header Upgrade $http_upgrade;
+#        proxy_set_header Connection keep-alive;
+#        proxy_set_header Host $host;
+#        proxy_cache_bypass $http_upgrade;
+#        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+#        proxy_set_header X-Forwarded-Proto https;
+#    }
+#}
+
+server {
+    root /app/frontend;
+
+    gzip on;
+    gzip_disable "msie6";
+
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_buffers 16 8k;
+    gzip_http_version 1.1;
+    gzip_min_length 256;
+    gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript application/vnd.ms-fontobject application$;
+    
+    location / {
+         try_files $uri $uri/ /index.html;
+    }
+
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    location /api {
+        proxy_pass http://backend:5000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection keep-alive;
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+    }
+}
