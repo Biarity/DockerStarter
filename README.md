@@ -2,9 +2,9 @@
 Docker starter project for ASP.NET Core app with a JS SPA frontend served by nginx and a PostgreSQL database. 
 
 # Quickstart
-Run this on the host machine:
+Install docker then run this on the host machine:
 
-(don't forget to update BACKEND-REPO-URL & FRONTEND-REPO-URL)
+(don't forget to update `BACKEND-REPO-URL` & `FRONTEND-REPO-URL`)
 ```
 apt-get -y update && apt-get -y install git \
 && git clone https://github.com/Biarity/DockerStarter.git /app/source \
