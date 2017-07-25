@@ -1,6 +1,17 @@
 # Docker Starter
 Docker starter project for ASP.NET Core app with a JS SPA frontend served by nginx and a PostgreSQL database. 
 
+# Quickstart
+Run this on the host machine:
+
+(don't forget to update BACKEND-REPO-URL & FRONTEND-REPO-URL)
+```
+apt-get -y update && apt-get -y install git \
+&& git clone https://github.com/Biarity/DockerStarter.git /app/source \
+&& backend-repo="BACKEND-REPO-URL" \ 
+&& frontend-repo="FRONTEND-REPO-URL" \
+&& cd /app/source && docker-compose build && docker-compose up -d
+```
 # Usage
 
 * [OPTIONAL] Update `backend/Dockerfile` to build/run backend correctly (& wait for db connection)
@@ -11,6 +22,7 @@ Docker starter project for ASP.NET Core app with a JS SPA frontend served by ngi
 
 * [OPTIONAL] Ensure DB connection string is set up in your backend source correctly
     * eg. `User Id=postgres; Database=postgres; Password=supersecretpassword; Host=db; Port=5432;`
+    * database can't be accessed externally so no need to change password
 
 1. Setup on host machine (ie. DigitalOcean machine)
     * SSH into host machine 
@@ -20,7 +32,7 @@ Docker starter project for ASP.NET Core app with a JS SPA frontend served by ngi
 
 2. Update repositories to pull form (via env vars)
     * these are the repos that will be cloned when you rebuild the images as below
-    * `backend-repo="BACKEND-REPO-URL" ; frontend-repo= "FRONTEND-REPO-URL"`
+    * `backend-repo="BACKEND-REPO-URL" ; frontend-repo="FRONTEND-REPO-URL"`
     
 3. Start compose server (ie. to update all)
     * `cd /app/source && docker-compose build && docker-compose up -d`
@@ -35,6 +47,8 @@ Docker starter project for ASP.NET Core app with a JS SPA frontend served by ngi
     * Edit the default file in host machine
     * `cd /app/source && docker-compose build nginx && docker-compose up --no-deps -d nginx`
 
+* Get postgres data
+    * will be at `/app/pg-vols`
 
 # Commands In More Detail
 * Windows: Via docker quickstart terminal in directory containing docker-compose.yml
@@ -70,7 +84,7 @@ Docker starter project for ASP.NET Core app with a JS SPA frontend served by ngi
 * PostgreSQL config
     * See postgres/Dockerfile to set up default db name, username, and password
         * Note database is not exposed on the outside so don't complicate too much
-    * EXAMPLE CONNECTION STRING
+    * Connection string to use
         `User Id=postgres; Database=postgres; Password=supersecretpassword; Host=db; Port=5432;`
 
 * PostgreSQL volumes
@@ -82,12 +96,6 @@ Docker starter project for ASP.NET Core app with a JS SPA frontend served by ngi
 * PostgreSQL auto backups
     * TODO: use this command with cron do generate auto backups, also make rotating so dumps don't accumulate
         * ``pg_dumpall -c  | gzip > /app/pg_backups/dump_`date +%d-%m-%Y"_"%H_%M_%S`.gz``
-
-* Other paths
-    * everything is in /app
-    * backend build @ /app/backend @ backend container
-    * frontend @ /app/frontend @ reverse-proxy container
-
 
 # TODO
 * create a better nginx file @ nginx/default
