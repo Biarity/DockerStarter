@@ -33,7 +33,7 @@ Docker starter project for ASP.NET Core app with a JS SPA frontend served by ngi
 
 * To only update nginx `default` file
     * Edit the default file in host machine
-    * `cd /app/source && docker-compose build frontend && docker-compose up --no-deps -d frontend`
+    * `cd /app/source && docker-compose build nginx && docker-compose up --no-deps -d nginx`
 
 
 # Commands In More Detail
