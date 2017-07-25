@@ -1,13 +1,10 @@
-FROM nginx
-COPY ./nginx/nginx.conf etc/nginx/nginx.conf
-COPY ./nginx/default etc/nginx/sites-available/default
+FROM alpine
+WORKDIR ./app
 
+ARG frontend-repo
+RUN apk update && apk add git
+RUN git clone $frontend-repo .
 
-RUN apt-get -y update && apt-get -y install git
-RUN git clone REPO_CONTAINING_FRONTEND_CODE .
-
-## Edit 2 below lines if you have to then uncomment
-# RUN apt-get -y update && apt-get -y install nodejs && apt-get -y install npm
-# RUN npm run build
-
-ADD ./dist app/frontend
+## BUILD LINES (ps. last actual build line should be CMD since this repo stops @ end)
+RUN apk add --update nodejs nodejs-npm && npm install npm@latest -g
+CMD npm install && npm run build

@@ -1,30 +1,42 @@
 # Docker Starter
 Docker starter project for ASP.NET Core app with a JS SPA frontend served by nginx and a PostgreSQL database. 
 
-TODO: create a better nginx file @ nginx/default
-
 # Usage
-* Edit the `RUN git clone ...` statements in backend/Dockerfile and frontend/Dockerfile accordingly
+
+* [OPTIONAL] Update `backend/Dockerfile` to build/run backend correctly (& wait for db connection)
+    * currently set up to build & run .NET Core projects (`dotnet build` + `dotnet run`)
+
+* [OPTIONAL] Update `frontend/Dockerfile` to build frontend source solution into `/app/dist` correctly
+    * currently set up to build `npm run build` to `/dist`
+
+* [OPTIONAL] Ensure DB connection string is set up in your backend source correctly
+    * eg. `User Id=postgres; Database=postgres; Password=supersecretpassword; Host=db; Port=5432;`
+
+1. Setup on host machine (ie. DigitalOcean machine)
+    * SSH into host machine 
+    * install docker
+    * move this entire folder to host machine into `/app/source`
+        * Using git `apt-get -y update && apt-get -y install git && git clone https://github.com/Biarity/DockerStarter.git /app/source`
+
+2. Update repositories to pull form (via env vars)
     * these are the repos that will be cloned when you rebuild the images as below
+    * `backend-repo="BACKEND-REPO-URL" ; frontend-repo= "FRONTEND-REPO-URL"`
     
-* Go to host machine (ie. DigitalOcean machine)
-* install docker
-* move this entire folder to host machine into /app/source
-    * eg. using git `apt-get -y update && apt-get -y install git && git clone https://github.com/Biarity/DockerStarter.git /app/source`
-
-* Start compose server (ie. to update all)
+3. Start compose server (ie. to update all)
     * `cd /app/source && docker-compose build && docker-compose up -d`
-
-* To only update backend
+    
+* To only update backend 
     * `cd /app/source && docker-compose build backend && docker-compose up --no-deps -d backend`
     
 * To only update frontend
-    * Update frontend/Dockerfile to build solution into /app/source/frontend/dist correctly
+    * `cd /app/source && docker-compose build frontend && docker-compose up --no-deps -d frontend`
+
+* To only update nginx `default` file
+    * Edit the default file in host machine
     * `cd /app/source && docker-compose build frontend && docker-compose up --no-deps -d frontend`
 
 
-
-# Commands
+# Commands In More Detail
 * Windows: Via docker quickstart terminal in directory containing docker-compose.yml
 * Linux: just use terminal in directory containing docker-compose.yml
 
@@ -44,9 +56,8 @@ TODO: create a better nginx file @ nginx/default
         * stop & delete containers, delete images
     * `docker-compose logs`
 
-* When updating only a small part
+* When updating only a specific services
     * First, upload the updated code for that specific service
-        * For example, upload the new backend/helloapp source code 
         * Best way to do this is via Git to only update the parts that need changing
         * Don't forget, backend's Dockerfile is set up to build so you only need to update the source code
     * `docker-compose build [service name]`
@@ -59,13 +70,14 @@ TODO: create a better nginx file @ nginx/default
 * PostgreSQL config
     * See postgres/Dockerfile to set up default db name, username, and password
         * Note database is not exposed on the outside so don't complicate too much
-    * See backend/helloapp/appsettings.json for example on setting up connection string
+    * EXAMPLE CONNECTION STRING
+        `User Id=postgres; Database=postgres; Password=supersecretpassword; Host=db; Port=5432;`
 
 * PostgreSQL volumes
     * the volumes contain postgresql's data, config, and logs
     * they are sync'd from the docker container to the local host machine
     * should persist even if container delete
-    * @ /app/pg-vols @ local machine (host)
+    * @ `/app/pg-vols` @ local machine (host)
 
 * PostgreSQL auto backups
     * TODO: use this command with cron do generate auto backups, also make rotating so dumps don't accumulate
@@ -75,3 +87,9 @@ TODO: create a better nginx file @ nginx/default
     * everything is in /app
     * backend build @ /app/backend @ backend container
     * frontend @ /app/frontend @ reverse-proxy container
+
+
+# TODO
+* create a better nginx file @ nginx/default
+* postgresql auto backups
+
