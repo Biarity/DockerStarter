@@ -44,7 +44,7 @@ apt-get -y update && apt-get -y install git \
     * `cd /app/source && docker-compose build frontend && docker-compose up --no-deps -d frontend`
 
 * To only update nginx `default` file
-    * Edit the default file in host machine
+    * `nano /app/source/nginx/default`
     * `cd /app/source && docker-compose build nginx && docker-compose up --no-deps -d nginx`
 
 * Get postgres data
