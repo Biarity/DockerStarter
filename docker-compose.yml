@@ -4,6 +4,8 @@ build:
   args:
     - backend-repo
     - frontend-repo
+    - backend-branch
+    - frontend-branch
 
 services:
   nginx:
@@ -27,6 +29,20 @@ services:
     restart: always
     ports: 
       - "5000"
+    depends_on:
+      - db
+      - backend-pwdless
+    
+  backend-pwdless:
+    build: ./backend
+      args: 
+        - backend-repo = https://github.com/pwdless/pwdless
+        - backend-branch = 2.0
+    environment:
+      - pwdless:stuffs = hello
+    restart: always
+    ports:
+      - "5001"
     depends_on:
       - db
       
